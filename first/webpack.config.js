@@ -1,5 +1,6 @@
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const port = process.env.PORT || 3000;
 
 module.exports = {
@@ -18,6 +19,7 @@ module.exports = {
               loader: 'babel-loader',
             },
           },
+
           { // 웹팩이 html을 읽을 수 있게 해줌, minimize: true 는 코드 최적화를 하는 옵션
             test: /\.html$/,
             use: [
@@ -29,10 +31,17 @@ module.exports = {
               },
             ],
           },
+
+          {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader'],
+          },
+
         ],
       },
 
     plugins: [ 
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({ // 템플릿을 지정하거나 favicon을 설정할 수 있음
       template: 'public/index.html', // public/index.html 를 템플릿으로 지정
       })
